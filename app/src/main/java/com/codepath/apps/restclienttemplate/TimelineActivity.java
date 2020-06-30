@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -45,6 +48,25 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets.setAdapter(adapter);
         populateHomeTimeline();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; adds items to the action bar
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true; // so menu is displayed
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // check if compose icon has been selected
+        if (item.getItemId() == R.id.compose) {
+            // go to compose activity
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return true; // consume the tap of the menu item
     }
 
     private void populateHomeTimeline() {
