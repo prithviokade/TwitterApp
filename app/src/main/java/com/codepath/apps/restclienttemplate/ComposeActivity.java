@@ -23,7 +23,7 @@ import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    public static final int MAX_TWEET_LENGTH = 240;
+    public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";
 
     EditText etCompose;
@@ -88,7 +88,7 @@ public class ComposeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tvCharLeft.setText(String.valueOf(280 - charSequence.length()));
+                tvCharLeft.setText(String.valueOf(MAX_TWEET_LENGTH - charSequence.length()));
             }
 
             @Override

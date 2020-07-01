@@ -39,6 +39,9 @@ public class Tweet {
     @Ignore
     public User user;
 
+    @Ignore
+    public String entityUrl;
+
     // empty constructor required by Parceler Library
     public Tweet() {}
 
@@ -49,6 +52,20 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.userId = tweet.user.id;
+
+        JSONObject entity = jsonObject.getJSONObject("entities");
+        JSONArray urls = entity.getJSONArray("urls");
+        if (urls.length() > 0) {
+            try {
+                JSONObject first = urls.getJSONObject(0);
+                tweet.entityUrl = (first.getString("media_url"));
+            } catch (JSONException e) {
+                tweet.entityUrl = null;
+            }
+
+        }
+
+
         return tweet;
     }
 
