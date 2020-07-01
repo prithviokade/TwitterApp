@@ -28,14 +28,15 @@ public class User {
     @ColumnInfo
     public String imageURL;
 
-    // empty constructor requrired by Parceler Library
+    // empty constructor required by Parceler Library
     public User() {}
 
     public static User fromJson(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.id = jsonObject.getLong("id");
         user.name = jsonObject.getString("name");
-        user.screenName = jsonObject.getString("screen_name");
+        user.screenName = "@" + jsonObject.getString("screen_name");
+        user.name = jsonObject.getString("name");
         user.imageURL = jsonObject.getString("profile_image_url_https");
         return user;
     }

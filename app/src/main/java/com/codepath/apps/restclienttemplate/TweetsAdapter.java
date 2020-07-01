@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
@@ -68,6 +67,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageView ivProfile;
         TextView tvBody;
         TextView tvScreenName;
+        TextView tvName;
         TextView tvRelDate;
         ImageView ivUrl;
 
@@ -76,6 +76,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ivProfile = itemView.findViewById(R.id.ivProfPic);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
+            tvName = itemView.findViewById(R.id.tvName);
             tvRelDate = itemView.findViewById(R.id.tvRelDate);
             ivUrl = itemView.findViewById(R.id.ivUrl);
 
@@ -84,17 +85,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+            tvName.setText(tweet.user.name);
             tvRelDate.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
             Glide.with(context).load(tweet.user.imageURL).transform(new CircleCrop()).into(ivProfile);
+
             if (tweet.entityUrl != null) {
                 Log.d("IMAGEWYA", tweet.entityUrl);
                 Glide.with(context).load(tweet.entityUrl).into(ivUrl);
-            } else {
-
+            } /* else {
                 ivUrl.setVisibility(View.GONE);
-            }
-
-
+            } */
         }
     }
 }

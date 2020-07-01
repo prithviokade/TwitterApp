@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class Tweet {
     public Tweet() {}
 
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
+        Log.d("TweetHERE", jsonObject.toString());
         Tweet tweet = new Tweet();
         tweet.id = jsonObject.getLong("id");
         tweet.body = jsonObject.getString("text");
@@ -53,21 +55,21 @@ public class Tweet {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.userId = tweet.user.id;
 
-        JSONObject entity = jsonObject.getJSONObject("entities");
-        JSONArray urls = entity.getJSONArray("urls");
-        if (urls.length() > 0) {
-            try {
-                JSONObject first = urls.getJSONObject(0);
-                tweet.entityUrl = (first.getString("media_url"));
-            } catch (JSONException e) {
-                tweet.entityUrl = null;
+        try {
+            JSONObject entity = jsonObject.getJSONObject("entities");
+            JSONArray urls = entity.getJSONArray("media");
+            if (urls.length() > 0) {
+                JSONObject main = urls.getJSONObject(0);
+                tweet.entityUrl = main.getString("media_url_https");
             }
-
+        } catch (JSONException e) {
+            tweet.entityUrl = null;
         }
 
-
         return tweet;
+
     }
+
 
     public static List<Tweet> fromJsonArray(JSONArray jsonArray) throws JSONException {
         List<Tweet> tweets = new ArrayList<>();
@@ -88,10 +90,11 @@ public class Tweet {
             long dateMillis = sf.parse(rawJsonDate).getTime();
             relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
                     System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+            String[] splitSpace = relativeDate.split(" ");
+            relativeDate = splitSpace[0] + splitSpace[1].charAt(0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return relativeDate;
     }
 }

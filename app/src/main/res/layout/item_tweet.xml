@@ -17,7 +17,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvScreenName"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,7 +30,9 @@
         android:id="@+id/tvBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvScreenName"
+        android:layout_below="@+id/tvName"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfPic"
@@ -43,7 +45,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvScreenName" />
+        android:layout_toEndOf="@+id/tvScreenName"
+        tools:text="3h" />
 
     <ImageView
         android:id="@+id/ivUrl"
@@ -54,4 +57,14 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/tvName"
+        tools:text="\@prithvi" />
 </RelativeLayout>
