@@ -16,7 +16,7 @@ public class TweetWithUser {
     public static List<Tweet> getTweetList(List<TweetWithUser> recentTweets) {
         List<Tweet> tweets = new ArrayList<>();
         for (int i = 0; i < recentTweets.size(); i++) {
-            Tweet tweet = new Tweet();
+            Tweet tweet = recentTweets.get(i).tweet;
             tweet.user = recentTweets.get(i).user;
             tweets.add(tweet);
         }

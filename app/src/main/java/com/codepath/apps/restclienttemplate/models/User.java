@@ -15,8 +15,8 @@ import java.util.List;
 @Entity
 public class User {
 
-    @ColumnInfo
     @PrimaryKey
+    @ColumnInfo
     public long id;
 
     @ColumnInfo
