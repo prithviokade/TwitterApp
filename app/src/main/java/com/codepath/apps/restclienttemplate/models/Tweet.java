@@ -40,8 +40,20 @@ public class Tweet {
     @Ignore
     public User user;
 
-    @Ignore
+    @ColumnInfo
     public String entityUrl;
+
+    @ColumnInfo
+    public long retweets;
+
+    @ColumnInfo
+    public long favorites;
+
+    @ColumnInfo
+    public boolean isRetweeted;
+
+    @ColumnInfo
+    public boolean isFavorited;
 
     // empty constructor required by Parceler Library
     public Tweet() {}
@@ -49,25 +61,32 @@ public class Tweet {
     public static Tweet fromJson(JSONObject jsonObject) throws JSONException {
         Log.d("TweetHERE", jsonObject.toString());
         Tweet tweet = new Tweet();
+        tweet.entityUrl = "";
+        try {
+            /*
+            JSONObject entity = jsonObject.getJSONObject("entities");
+            JSONArray urls = entity.getJSONArray("media");
+            JSONObject main = urls.getJSONObject(0);
+            tweet.entityUrl = main.getString("media_url_https");
+            */
+            tweet.entityUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url_https");
+            if (tweet.entityUrl == null) {
+                Log.d("TweetNull", "entityUrl is null");
+            }
+        } catch (JSONException e) {
+            tweet.entityUrl = "";
+        }
         tweet.id = jsonObject.getLong("id");
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.userId = tweet.user.id;
-
-        try {
-            JSONObject entity = jsonObject.getJSONObject("entities");
-            JSONArray urls = entity.getJSONArray("media");
-            if (urls.length() > 0) {
-                JSONObject main = urls.getJSONObject(0);
-                tweet.entityUrl = main.getString("media_url_https");
-            }
-        } catch (JSONException e) {
-            tweet.entityUrl = null;
-        }
+        tweet.retweets = jsonObject.getLong("retweet_count");
+        tweet.favorites = jsonObject.getLong("favorite_count");
+        tweet.isFavorited = jsonObject.getBoolean("favorited");
+        tweet.isRetweeted = jsonObject.getBoolean("retweeted");
 
         return tweet;
-
     }
 
 

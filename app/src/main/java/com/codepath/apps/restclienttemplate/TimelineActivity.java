@@ -82,7 +82,7 @@ public class TimelineActivity extends AppCompatActivity {
                 List<TweetWithUser> recentTweets = tweetDao.recentItems();
                 List<Tweet> databaseTweets = TweetWithUser.getTweetList(recentTweets);
                 adapter.clear();
-                adapter.addAll(databaseTweets); // sus
+                adapter.addAll(databaseTweets);
             }
         });
 
@@ -140,7 +140,7 @@ public class TimelineActivity extends AppCompatActivity {
                     adapter.clear();
                     adapter.addAll(tweetsFromNetwork);
                     Log.d(TAG, tweets.toString());
-                    adapter.notifyDataSetChanged();
+                    // adapter.notifyDataSetChanged();
                     swipeContainer.setRefreshing(false);
 
                     AsyncTask.execute(new Runnable() {

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:backgroundTint="#FFFFFF">
 
     <ImageView
         android:id="@+id/ivProfPic"
@@ -31,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvName"
-        android:autoLink="all"
-        android:linksClickable="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfPic"
+        android:autoLink="all"
+        android:linksClickable="true"
         tools:text="tweet tweet!" />
 
     <TextView
@@ -67,4 +68,28 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvName"
         tools:text="\@prithvi" />
+
+
+    <TextView
+        android:id="@+id/tvRetweets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivUrl"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="100dp"
+        android:drawableLeft="@drawable/ic_vector_retweet"
+        android:tint="@color/medium_gray"
+        tools:text="rt" />
+
+    <TextView
+        android:id="@+id/tvFavs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivUrl"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvRetweets"
+        android:drawableLeft="@drawable/ic_vector_heart_stroke"
+        android:tint="@color/medium_gray"
+        tools:text="fav" />
 </RelativeLayout>
