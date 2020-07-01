@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.TweetDao;
+import com.codepath.apps.restclienttemplate.models.TweetWithUser;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -30,6 +34,8 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
 
+    TweetDao tweetDao;
+
     public static final String TAG = "TimelineActivity";
     private final int REQUEST_CODE = 20;
 
@@ -39,6 +45,7 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
 
         client = TwitterApplication.getRestClient(this);
+        tweetDao = ((TwitterApplication) getApplicationContext()).getMyDatabase().tweetDao();
 
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
@@ -49,8 +56,20 @@ public class TimelineActivity extends AppCompatActivity {
         // Set up layout manager and adapter of the recycler view
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-        populateHomeTimeline();
 
+        // Query for existing tweets in the database in a background thread
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "Showing data from database");
+                List<TweetWithUser> recentTweets = tweetDao.recentItems();
+                List<Tweet> databaseTweets = TweetWithUser.getTweetList(recentTweets);
+                tweets = new ArrayList<>();
+                tweets.addAll(databaseTweets); // sus
+            }
+        });
+
+        populateHomeTimeline();
     }
 
     @Override
@@ -75,8 +94,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // make sure requestCode is same as what we launched it with
-        // make sure child activity (ComposeActivity) has finished successfully
-        Log.d("WHYYYYWH", Integer.toString(requestCode));
+        // make sure child activity (ComposeActivity) has finished successfully with resultCode
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             // data is what child activity communicated back to us (added tweet)
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
@@ -99,9 +117,21 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.i(TAG, "onSuccess " + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    tweets = new ArrayList<>();
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     Log.d(TAG, tweets.toString());
                     adapter.notifyDataSetChanged();
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Saving data to database");
+                            // insert users
+                            List<User> users = User.fromJsonTweetArray(tweets);
+                            tweetDao.insertModel(users.toArray(new User[0]));
+                            // then insert tweets
+                            tweetDao.insertModel(tweets.toArray(new Tweet[0]));
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
