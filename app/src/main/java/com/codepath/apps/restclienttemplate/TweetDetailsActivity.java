@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.codepath.apps.restclienttemplate.databinding.ActivityTweetDetailsBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -40,26 +41,29 @@ public class TweetDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tweet_details);
+        ActivityTweetDetailsBinding binding = ActivityTweetDetailsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
 
-        ivProfile = findViewById(R.id.ivProfPic);
-        tvBody = findViewById(R.id.tvBody);
-        tvScreenName = findViewById(R.id.tvScreenName);
-        tvName = findViewById(R.id.tvName);
-        tvRelDate = findViewById(R.id.tvRelDate);
-        ivUrl = findViewById(R.id.ivUrl);
-        tvRetweets = findViewById(R.id.tvRetweets);
-        tvFavs = findViewById(R.id.tvFavs);
-        btnFav = findViewById(R.id.btnFav);
-        btnRetweet = findViewById(R.id.btnRetweet);
-        btnReply = findViewById(R.id.btnReply);
+        ivProfile = binding.ivProfPic;
+        tvBody = binding.tvBody;
+        tvScreenName = binding.tvScreenName;
+        tvName = binding.tvName;
+        tvRelDate = binding.tvCreated;
+        ivUrl = binding.ivUrl;
+        tvRetweets = binding.tvRetweets;
+        tvFavs = binding.tvLikes;
+        btnFav = binding.btnFav;
+        btnRetweet = binding.btnRetweet;
+        btnReply = binding.btnReply;
 
         tvBody.setText(tweet.body);
         tvScreenName.setText(tweet.user.screenName);
         tvName.setText(tweet.user.name);
-        tvRelDate.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
+        // tvRelDate.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
+        tvRelDate.setText(tweet.createdAt);
         tvRetweets.setText(Long.toString(tweet.retweets));
         tvFavs.setText(Long.toString(tweet.favorites));
 

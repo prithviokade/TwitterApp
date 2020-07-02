@@ -26,8 +26,8 @@
         android:layout_toEndOf="@+id/ivProfPic"
         android:text="TextView" />
 
-    <EditText
-        android:id="@+id/etBody"
+    <TextView
+        android:id="@+id/tvBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfPic"
@@ -36,14 +36,13 @@
         android:autoLink="all"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
         android:linksClickable="true" />
 
     <ImageView
         android:id="@+id/ivUrl"
         android:layout_width="match_parent"
         android:layout_height="297dp"
-        android:layout_below="@+id/etBody"
+        android:layout_below="@+id/tvBody"
         android:layout_marginTop="5dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -99,13 +98,13 @@
     <ImageButton
         android:id="@+id/btnRetweet"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:layout_below="@+id/tvRetweets"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="212dp"
+        android:layout_marginBottom="241dp"
         android:layout_toEndOf="@+id/btnReply"
         android:backgroundTint="@color/plain_white"
         android:tint="@color/medium_gray"
@@ -114,12 +113,12 @@
     <ImageButton
         android:id="@+id/btnFav"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
         android:layout_below="@+id/tvRetweets"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="219dp"
+        android:layout_marginBottom="237dp"
         android:layout_toEndOf="@+id/btnRetweet"
         android:background="@color/plain_white"
         android:tint="@color/medium_gray"

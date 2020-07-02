@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.databinding.ActivityComposeBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -36,13 +38,15 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
+        ActivityComposeBinding binding = ActivityComposeBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         client = TwitterApplication.getRestClient(this);
 
-        etCompose = findViewById(R.id.etCompose);
-        btnTweet = findViewById(R.id.btnTweet);
-        tvCharLeft = findViewById(R.id.tvCharLeft);
+        etCompose = binding.etCompose;
+        btnTweet = binding.btnTweet;
+        tvCharLeft = binding.tvCharLeft;
 
         // Set click listener on button
         btnTweet.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +94,13 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 tvCharLeft.setText(String.valueOf(MAX_TWEET_LENGTH - charSequence.length()));
+                if (charSequence.length() > 0 && charSequence.length() <= MAX_TWEET_LENGTH) {
+                    btnTweet.setEnabled(true);
+                    btnTweet.setBackgroundColor(Color.argb(255, 29, 161, 242));
+                } else {
+                    btnTweet.setEnabled(false);
+                    btnTweet.setBackgroundColor(Color.argb(255, 170, 184, 194));
+                }
             }
 
             @Override
