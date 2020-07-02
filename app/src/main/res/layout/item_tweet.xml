@@ -25,6 +25,7 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
         android:textStyle="bold"
+        android:backgroundTint="#FFFFFF"
         tools:text="prithviro" />
 
     <TextView
@@ -37,6 +38,7 @@
         android:layout_toEndOf="@+id/ivProfPic"
         android:autoLink="all"
         android:linksClickable="true"
+        android:backgroundTint="#FFFFFF"
         tools:text="tweet tweet!" />
 
     <TextView
@@ -47,6 +49,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/tvScreenName"
+        android:backgroundTint="#FFFFFF"
         tools:text="3h" />
 
     <ImageView
@@ -55,6 +58,7 @@
         android:layout_height="219dp"
         android:layout_below="@+id/tvBody"
         android:layout_marginStart="5dp"
+        android:backgroundTint="#FFFFFF"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -69,15 +73,26 @@
         android:layout_toEndOf="@+id/tvName"
         tools:text="\@prithvi" />
 
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="30dp"
+        android:layout_height="24dp"
+        android:layout_below="@+id/ivUrl"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="3dp"
+        android:backgroundTint="#FFFFFF"
+        android:tint="@color/medium_gray"
+        app:srcCompat="@drawable/ic_vector_retweet" />
 
     <TextView
         android:id="@+id/tvRetweets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivUrl"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="100dp"
-        android:drawableLeft="@drawable/ic_vector_retweet"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/btnRetweet"
         android:tint="@color/medium_gray"
         tools:text="rt" />
 
@@ -88,8 +103,18 @@
         android:layout_below="@+id/ivUrl"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvRetweets"
-        android:drawableLeft="@drawable/ic_vector_heart_stroke"
+        android:layout_toEndOf="@+id/btnFav"
+        android:tint="@color/medium_gray" />
+
+    <ImageButton
+        android:id="@+id/btnFav"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/ivUrl"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/btnRetweet"
+        android:backgroundTint="#FFFFFF"
         android:tint="@color/medium_gray"
-        tools:text="fav" />
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
 </RelativeLayout>

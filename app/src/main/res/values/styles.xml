@@ -1,6 +1,12 @@
 <resources>
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/twitter_blue</item>
+        <item name="colorPrimaryDark">@color/twitter_blue</item>
+        <item name="colorAccent">@color/twitter_blue</item>
+        <item name="android:statusBarColor">@color/twitter_blue</item>
+        <item name="android:displayOptions">useLogo</item>
+        <item name="android:logo">@drawable/ic_launcher_twitter</item>
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -11,6 +17,10 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="MyActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+
     </style>
 
 </resources>
