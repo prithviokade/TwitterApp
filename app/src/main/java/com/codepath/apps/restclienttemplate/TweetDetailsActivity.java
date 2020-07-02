@@ -62,10 +62,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvBody.setText(tweet.body);
         tvScreenName.setText(tweet.user.screenName);
         tvName.setText(tweet.user.name);
-        // tvRelDate.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
-        tvRelDate.setText(tweet.createdAt);
-        tvRetweets.setText(Long.toString(tweet.retweets));
-        tvFavs.setText(Long.toString(tweet.favorites));
+        tvRelDate.setText(tweet.formatTime(tweet.createdAt));
+        tvRetweets.setText(Long.toString(tweet.retweets) + " Retweets");
+        tvFavs.setText(Long.toString(tweet.favorites) + " Likes");
 
         if (tweet.isRetweeted) {
             btnRetweet.setColorFilter(Color.argb(255, 0, 211, 30)); // Green Tint
@@ -102,10 +101,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             Log.i("TweetsAdapter", "onSuccess to retweet");
                             btnRetweet.setColorFilter(Color.argb(255, 0, 211, 30)); // Green Tint
-                            tvRetweets.setTextColor(Color.argb(255, 0, 211, 30));
                             tweet.isRetweeted = true;
                             tweet.retweets++;
-                            tvRetweets.setText(Long.toString(tweet.retweets));
+                            tvRetweets.setText(Long.toString(tweet.retweets) + " Retweets");
                         }
 
                         @Override
@@ -119,10 +117,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             Log.i("TweetsAdapter", "onSuccess to unretweet");
                             btnRetweet.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
-                            tvRetweets.setTextColor(Color.argb(255, 170, 184, 194));
                             tweet.isRetweeted = false;
                             tweet.retweets--;
-                            tvRetweets.setText(Long.toString(tweet.retweets));
+                            tvRetweets.setText(Long.toString(tweet.retweets) + " Retweets");
                         }
 
                         @Override
@@ -144,10 +141,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             Log.i("TweetsAdapter", "onSuccess to favorite");
                             btnFav.setColorFilter(Color.argb(255, 211, 0, 60)); // Red Tint
-                            tvFavs.setTextColor(Color.argb(255, 211, 184, 194));
                             tweet.isFavorited = true;
                             tweet.favorites++;
-                            tvFavs.setText(Long.toString(tweet.favorites));
+                            tvFavs.setText(Long.toString(tweet.favorites)+ " Likes");
                         }
 
                         @Override
@@ -161,10 +157,9 @@ public class TweetDetailsActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Headers headers, JSON json) {
                             Log.i("TweetsAdapter", "onSuccess to unfavorite");
                             btnFav.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
-                            tvFavs.setTextColor(Color.argb(255, 170, 184, 194));
                             tweet.isFavorited = false;
                             tweet.favorites--;
-                            tvFavs.setText(Long.toString(tweet.favorites));
+                            tvFavs.setText(Long.toString(tweet.favorites) + " Likes");
                         }
 
                         @Override

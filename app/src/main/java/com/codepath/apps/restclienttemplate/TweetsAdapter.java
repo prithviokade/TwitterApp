@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,13 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.codepath.apps.restclienttemplate.databinding.ItemTweetBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
-import org.json.JSONException;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -76,7 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // Define a ViewHolder
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProfile;
         TextView tvBody;
@@ -89,6 +86,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         ImageButton btnRetweet;
         ImageButton btnFav;
         ImageButton btnReply;
+        RelativeLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,6 +101,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnFav = itemView.findViewById(R.id.btnFav);
             btnRetweet = itemView.findViewById(R.id.btnRetweet);
             btnReply = itemView.findViewById(R.id.btnReply);
+            container = itemView.findViewById(R.id.container);
         }
 
         public void bind(final Tweet tweet) {
@@ -145,7 +144,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     context.startActivity(intent); // show activity
                 }
             });
-
 
             btnRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -230,21 +228,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     }
                 }
             });
+
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, TweetDetailsActivity.class);
+                    intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
+                    context.startActivity(intent); // show activity
+                }
+            });
+
         }
 
-        @Override
-        public void onClick(View view) {
-            Log.d("TWEETSADAPTERHERE", "HIIIIIII");
-            int position = getAdapterPosition();
-            Log.d("TWEETSADAPTERHERE", Integer.toString(position));
-            if (position != RecyclerView.NO_POSITION) { // check validity of position
-                Tweet tweet = tweets.get(position);
-                Intent intent = new Intent(context, TweetDetailsActivity.class);
-                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
-                context.startActivity(intent); // show activity
-
-            }
-        }
     }
 
 }

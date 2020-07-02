@@ -74,7 +74,7 @@ public class TimelineActivity extends AppCompatActivity {
         tweetDao = ((TwitterApplication) getApplicationContext()).getMyDatabase().tweetDao();
 
         // Find the recycler view
-        rvTweets = binding.rvTweets;
+        rvTweets = findViewById(R.id.rvTweets);
         // for scroll listener
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         start_id = 0;
@@ -89,11 +89,13 @@ public class TimelineActivity extends AppCompatActivity {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.d("TimelineActivity", "scrolling");
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
                 populateNextHomeTimeline();
             }
         };
+
         // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
         // Query for existing tweets in the database in a background thread
@@ -166,7 +168,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     private void populateNextHomeTimeline() {
-        client.getNextHomeTimeline(start_id, new JsonHttpResponseHandler() {
+        client.getNextHomeTimeline(tweets.get(tweets.size() - 1).id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccessNext " + json.toString());
@@ -176,8 +178,8 @@ public class TimelineActivity extends AppCompatActivity {
                     final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
                     adapter.addAll(tweetsFromNetwork);
                     Log.d(TAG, tweets.toString());
-                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
-                    start_id = oldest_tweet.id;
+                    // Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
+                    // start_id = oldest_tweet.id;
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
