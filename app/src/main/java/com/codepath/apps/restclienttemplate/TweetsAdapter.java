@@ -75,7 +75,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     // Define a ViewHolder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivProfile;
         TextView tvBody;
@@ -111,8 +111,18 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvFavs.setText(Long.toString(tweet.favorites));
             if (tweet.isRetweeted) {
                 btnRetweet.setColorFilter(Color.argb(255, 0, 211, 30)); // Green Tint
+                tvRetweets.setTextColor(Color.argb(255, 0, 211, 30));
             } else {
                 btnRetweet.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
+                tvRetweets.setTextColor(Color.argb(255, 170, 184, 194));
+            }
+
+            if (tweet.isFavorited) {
+                btnFav.setColorFilter(Color.argb(255, 211, 0, 60)); // Red Tint
+                tvFavs.setTextColor(Color.argb(255, 211, 184, 194));
+            } else {
+                btnFav.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
+                tvFavs.setTextColor(Color.argb(255, 170, 184, 194));
             }
 
             Glide.with(context).load(tweet.user.imageURL).transform(new CircleCrop()).into(ivProfile);
@@ -129,27 +139,79 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 public void onClick(View view) {
                     // Make API call on Twitter to post
                     if (!tweet.isRetweeted) {
-                        client.updateRetweet(new JsonHttpResponseHandler() {
+                        client.updateRetweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 Log.i("TweetsAdapter", "onSuccess to retweet");
+                                btnRetweet.setColorFilter(Color.argb(255, 0, 211, 30)); // Green Tint
+                                tvRetweets.setTextColor(Color.argb(255, 0, 211, 30));
+                                tweet.isRetweeted = true;
+                                tweet.retweets++;
+                                tvRetweets.setText(Long.toString(tweet.retweets));
                             }
 
                             @Override
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                Log.e("TweetsAdapter", "onFailure to retweet", throwable);
+                                Log.e("TweetsAdapter", "onFailure to retweet" + response, throwable);
                             }
                         });
                     } else {
-                        client.updateUnRetweet(new JsonHttpResponseHandler() {
+                        client.updateUnRetweet(tweet.id, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Headers headers, JSON json) {
                                 Log.i("TweetsAdapter", "onSuccess to unretweet");
+                                btnRetweet.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
+                                tvRetweets.setTextColor(Color.argb(255, 170, 184, 194));
+                                tweet.isRetweeted = false;
+                                tweet.retweets--;
+                                tvRetweets.setText(Long.toString(tweet.retweets));
                             }
 
                             @Override
                             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                                Log.e("TweetsAdapter", "onFailure to unretweet", throwable);
+                                Log.e("TweetsAdapter", "onFailure to unretweet" + response, throwable);
+                            }
+                        });
+                    }
+                }
+            });
+
+            btnFav.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Make API call on Twitter to post
+                    if (!tweet.isFavorited) {
+                        client.updateFavorite(tweet.id, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                Log.i("TweetsAdapter", "onSuccess to favorite");
+                                btnFav.setColorFilter(Color.argb(255, 211, 0, 60)); // Red Tint
+                                tvFavs.setTextColor(Color.argb(255, 211, 184, 194));
+                                tweet.isFavorited = true;
+                                tweet.favorites++;
+                                tvFavs.setText(Long.toString(tweet.favorites));
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                Log.e("TweetsAdapter", "onFailure to favorite" + response, throwable);
+                            }
+                        });
+                    } else {
+                        client.updateUnFavorite(tweet.id, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                Log.i("TweetsAdapter", "onSuccess to unfavorite");
+                                btnFav.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
+                                tvFavs.setTextColor(Color.argb(255, 170, 184, 194));
+                                tweet.isFavorited = false;
+                                tweet.favorites--;
+                                tvFavs.setText(Long.toString(tweet.favorites));
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                Log.e("TweetsAdapter", "onFailure to unfavorite" + response, throwable);
                             }
                         });
                     }
@@ -157,8 +219,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             });
         }
 
+        @Override
         public void onClick(View view) {
+            Log.d("TWEETSADAPTERHERE", "HIIIIIII");
             int position = getAdapterPosition();
+            Log.d("TWEETSADAPTERHERE", Integer.toString(position));
             if (position != RecyclerView.NO_POSITION) { // check validity of position
                 Tweet tweet = tweets.get(position);
                 Intent intent = new Intent(context, TweetDetailsActivity.class);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:backgroundTint="#FFFFFF">
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/ivProfPic"
@@ -24,8 +24,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
-        android:textStyle="bold"
         android:backgroundTint="#FFFFFF"
+        android:textStyle="bold"
         tools:text="prithviro" />
 
     <TextView
@@ -37,8 +37,8 @@
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfPic"
         android:autoLink="all"
-        android:linksClickable="true"
         android:backgroundTint="#FFFFFF"
+        android:linksClickable="true"
         tools:text="tweet tweet!" />
 
     <TextView
@@ -58,9 +58,9 @@
         android:layout_height="219dp"
         android:layout_below="@+id/tvBody"
         android:layout_marginStart="5dp"
-        android:backgroundTint="#FFFFFF"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
+        android:backgroundTint="#FFFFFF"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
