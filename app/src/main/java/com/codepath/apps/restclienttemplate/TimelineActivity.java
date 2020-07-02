@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.codepath.apps.restclienttemplate.databinding.ActivityTimelineBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -37,6 +39,9 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     TweetsAdapter adapter;
     MenuItem miActionProgressItem;
+    MenuItem compose;
+    ProgressBar actionProgress;
+    Toolbar toolbar;
 
     // Store a member variable for the listener
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -54,6 +59,22 @@ public class TimelineActivity extends AppCompatActivity {
         ActivityTimelineBinding binding = ActivityTimelineBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.compose) {
+                    // go to compose activity
+                    Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE);
+                    return true;
+                }
+                return false;
+            }
+        });
+        Menu menu = toolbar.getMenu();
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        Log.d("miActionProgressItem", String.valueOf(miActionProgressItem));
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
@@ -112,15 +133,17 @@ public class TimelineActivity extends AppCompatActivity {
         populateHomeTimeline();
     }
 
+    /*
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
-        miActionProgressItem = menu.findItem(R.id.miActionProgress);
 
         // Return to finish
         return super.onPrepareOptionsMenu(menu);
     }
 
+
+     */
     public void showProgressBar() {
         // Show progress item
         miActionProgressItem.setVisible(true);
@@ -130,14 +153,35 @@ public class TimelineActivity extends AppCompatActivity {
         // Hide progress item
         miActionProgressItem.setVisible(false);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; adds items to the action bar
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        compose = menu.findItem(R.id.compose);
+        // actionProgress = menu.findItem(R.id.pbProgressAction);
+        compose.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Log.d("TimelineActivityCompose", "woot woot");
+                return true;
+            }
+        });
+
         return true; // so menu is displayed
     }
 
+ */
+
+/*
+    public void composeItemClick() {
+        Log.d("TimelineActivityCompose", "woot woot");
+    }
+
+ */
+
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // check if compose icon has been selected
@@ -150,6 +194,8 @@ public class TimelineActivity extends AppCompatActivity {
         return true; // consume the tap of the menu item
     }
 
+
+ */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // make sure requestCode is same as what we launched it with
@@ -223,7 +269,6 @@ public class TimelineActivity extends AppCompatActivity {
                             tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));
                         }
                     });
-
 
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);

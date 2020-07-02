@@ -4,4 +4,4 @@
     style="?android:attr/progressBarStyleLarge"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:progressTint="@color/plain_white" />
+    android:progressTint="@color/medium_gray"/>

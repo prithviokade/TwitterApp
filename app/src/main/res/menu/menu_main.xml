@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".TimelineActivity">
 
     <item
         android:id="@+id/miActionProgress"
-        android:icon="@drawable/ic_vector_heart_stroke"
-        android:iconTint="@color/plain_white"
         android:title="Loading..."
         android:visible="true"
         app:actionLayout="@layout/action_view_progress"
@@ -17,7 +16,8 @@
         android:icon="@drawable/vector_compose_fab"
         android:iconTint="@color/plain_white"
         android:title="Compose"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        />
 
 
 </menu>
