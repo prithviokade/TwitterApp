@@ -222,7 +222,7 @@ public class TimelineActivity extends AppCompatActivity {
                 showProgressBar();
                 try {
                     final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
-                    adapter.addAll(tweetsFromNetwork);
+                    adapter.addAll(tweetsFromNetwork.subList(1, tweetsFromNetwork.size() - 1));
                     adapter.notifyItemRangeInserted(tweets.size() - tweetsFromNetwork.size() - 1, 25);
                     Log.d(TAG, tweets.toString());
                     // Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);

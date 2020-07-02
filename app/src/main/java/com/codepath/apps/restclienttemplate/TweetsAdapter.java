@@ -108,7 +108,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             tvName.setText(tweet.user.name);
-            tvRelDate.setText(tweet.getRelativeTimeAgo(tweet.createdAt));
+            tvRelDate.setText("· " + tweet.getRelativeTimeAgo(tweet.createdAt));
             tvRetweets.setText(Long.toString(tweet.retweets));
             tvFavs.setText(Long.toString(tweet.favorites));
             if (tweet.isRetweeted) {
