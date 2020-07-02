@@ -1,6 +1,5 @@
 package com.codepath.apps.restclienttemplate;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -9,9 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,7 +22,7 @@ import org.parceler.Parcels;
 
 import okhttp3.Headers;
 
-public class ComposeActivity extends DialogFragment {
+public class ComposeActivity extends AppCompatActivity {
 
     public static final int MAX_TWEET_LENGTH = 280;
     public static final String TAG = "ComposeActivity";
@@ -36,29 +33,16 @@ public class ComposeActivity extends DialogFragment {
 
     TwitterClient client;
 
-    public ComposeActivity() {}
-
-    public static ComposeActivity newInstance(){
-        ComposeActivity frag = new ComposeActivity();
-        Bundle args = new Bundle();
-        frag.setArguments(args);
-        return frag;
-    }
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_compose, container);
-    }
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // setContentView(R.layout.activity_compose);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_compose);
 
         client = TwitterApplication.getRestClient(this);
 
-        etCompose = (EditText) view.findViewById(R.id.etCompose);
-        btnTweet = (Button) view.findViewById(R.id.btnTweet);
-        tvCharLeft = (TextView) view.findViewById(R.id.tvCharLeft);
+        etCompose = findViewById(R.id.etCompose);
+        btnTweet = findViewById(R.id.btnTweet);
+        tvCharLeft = findViewById(R.id.tvCharLeft);
 
         // Set click listener on button
         btnTweet.setOnClickListener(new View.OnClickListener() {
@@ -66,14 +50,13 @@ public class ComposeActivity extends DialogFragment {
             public void onClick(View view) {
                 String tweetContent = etCompose.getText().toString();
                 if (tweetContent.isEmpty()) {
-                    btnTweet.setEnabled(false);
+                    Toast.makeText(ComposeActivity.this, "Your tweet cannot be empty", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (tweetContent.length() > MAX_TWEET_LENGTH) {
-                    btnTweet.setEnabled(false);
+                    Toast.makeText(ComposeActivity.this, "Your tweet is too long", Toast.LENGTH_LONG).show();
                     return;
                 }
-                btnTweet.setEnabled(true);
                 // Make API call on Twitter to post
                 client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
                     @Override
@@ -86,7 +69,7 @@ public class ComposeActivity extends DialogFragment {
                             data.putExtra("tweet", Parcels.wrap(tweet));
                             // set result code and bundle data for response
                             setResult(RESULT_OK, data);
-                            dismiss(); // closes activity, passes data to parent
+                            finish(); // closes activity, passes data to parent
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

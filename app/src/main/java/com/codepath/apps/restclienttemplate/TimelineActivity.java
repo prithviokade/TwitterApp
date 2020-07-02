@@ -34,6 +34,11 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
+    MenuItem miActionProgressItem;
+
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
+    long start_id;
 
     TweetDao tweetDao;
 
@@ -66,6 +71,9 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Find the recycler view
         rvTweets = findViewById(R.id.rvTweets);
+        // for scroll listener
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        start_id = 0;
         // Init the list of tweets and adapter
         tweets = new ArrayList<>();
         adapter = new TweetsAdapter(this, tweets);
@@ -73,7 +81,17 @@ public class TimelineActivity extends AppCompatActivity {
         // Set up layout manager and adapter of the recycler view
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(adapter);
-
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                populateNextHomeTimeline();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
         // Query for existing tweets in the database in a background thread
         AsyncTask.execute(new Runnable() {
             @Override
@@ -85,11 +103,27 @@ public class TimelineActivity extends AppCompatActivity {
                 adapter.addAll(databaseTweets);
             }
         });
-
         populateHomeTimeline();
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
 
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,9 +158,34 @@ public class TimelineActivity extends AppCompatActivity {
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
         }
-
-
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void populateNextHomeTimeline() {
+        client.getNextHomeTimeline(start_id, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.i(TAG, "onSuccessNext " + json.toString());
+                JSONArray jsonArray = json.jsonArray;
+                showProgressBar();
+                try {
+                    final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
+                    adapter.addAll(tweetsFromNetwork);
+                    Log.d(TAG, tweets.toString());
+                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
+                    start_id = oldest_tweet.id;
+                } catch (JSONException e) {
+                    Log.e(TAG, "JSON exception", e);
+                }
+                hideProgressBar();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.i(TAG, "onFailureNext " + response, throwable);
+            }
+        });
+        scrollListener.resetState();
     }
 
     private void populateHomeTimeline() {
@@ -135,13 +194,15 @@ public class TimelineActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccess " + json.toString());
                 JSONArray jsonArray = json.jsonArray;
+                showProgressBar();
                 try {
                     final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
                     adapter.clear();
                     adapter.addAll(tweetsFromNetwork);
                     Log.d(TAG, tweets.toString());
-                    // adapter.notifyDataSetChanged();
                     swipeContainer.setRefreshing(false);
+                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
+                    start_id = oldest_tweet.id;
 
                     AsyncTask.execute(new Runnable() {
                         @Override
@@ -159,6 +220,7 @@ public class TimelineActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
+                hideProgressBar();
             }
 
             @Override

@@ -78,9 +78,9 @@
         android:layout_width="30dp"
         android:layout_height="24dp"
         android:layout_below="@+id/ivUrl"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="170dp"
+        android:layout_marginStart="67dp"
         android:layout_marginTop="3dp"
+        android:layout_toEndOf="@+id/btnReply"
         android:backgroundTint="#FFFFFF"
         android:tint="@color/medium_gray"
         app:srcCompat="@drawable/ic_vector_retweet" />
@@ -116,5 +116,18 @@
         android:layout_toEndOf="@+id/btnRetweet"
         android:backgroundTint="#FFFFFF"
         android:tint="@color/medium_gray"
-        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+        app:srcCompat="@drawable/ic_vector_heart" />
+
+    <ImageButton
+        android:id="@+id/btnReply"
+        android:layout_width="38dp"
+        android:layout_height="31dp"
+        android:layout_below="@+id/ivUrl"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/plain_white"
+        android:backgroundTint="@color/plain_white"
+        android:tint="@color/medium_gray"
+        app:srcCompat="@drawable/vector_compose_dm_fab" />
 </RelativeLayout>

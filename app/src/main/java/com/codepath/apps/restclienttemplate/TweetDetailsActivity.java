@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     TextView tvFavs;
     ImageButton btnRetweet;
     ImageButton btnFav;
+    ImageButton btnReply;
 
     TwitterClient client;
     Tweet tweet;
@@ -52,6 +54,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tvFavs = findViewById(R.id.tvFavs);
         btnFav = findViewById(R.id.btnFav);
         btnRetweet = findViewById(R.id.btnRetweet);
+        btnReply = findViewById(R.id.btnReply);
 
         tvBody.setText(tweet.body);
         tvScreenName.setText(tweet.user.screenName);
@@ -168,6 +171,16 @@ public class TweetDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TweetDetailsActivity.this, ReplyActivity.class);
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
+                startActivity(intent); // show activity
+            }
+        });
+
     }
 
 }

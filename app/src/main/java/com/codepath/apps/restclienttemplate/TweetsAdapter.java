@@ -87,6 +87,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvFavs;
         ImageButton btnRetweet;
         ImageButton btnFav;
+        ImageButton btnReply;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +101,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvFavs = itemView.findViewById(R.id.tvFavs);
             btnFav = itemView.findViewById(R.id.btnFav);
             btnRetweet = itemView.findViewById(R.id.btnRetweet);
+            btnReply = itemView.findViewById(R.id.btnReply);
         }
 
         public void bind(final Tweet tweet) {
@@ -133,6 +135,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 ivUrl.setVisibility(View.GONE);
             }
             client = TwitterApplication.getRestClient(context);
+
+            btnReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ReplyActivity.class);
+                    intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
+                    context.startActivity(intent); // show activity
+                }
+            });
+
 
             btnRetweet.setOnClickListener(new View.OnClickListener() {
                 @Override

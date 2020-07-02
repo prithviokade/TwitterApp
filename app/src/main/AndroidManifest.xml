@@ -11,10 +11,11 @@
         android:name=".TwitterApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_twitter_round"
-        android:logo="@drawable/ic_launcher_twitter"
         android:label="Twitter"
+        android:logo="@drawable/ic_launcher_twitter"
         android:theme="@style/AppTheme">
-        <activity android:name=".TweetDetailsActivity"></activity>
+        <activity android:name=".ReplyActivity"></activity>
+        <activity android:name=".TweetDetailsActivity" />
         <activity android:name=".ComposeActivity" />
         <activity android:name=".TimelineActivity" />
         <activity

@@ -64,6 +64,15 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(apiUrl, params, "", handler);
 	}
 
+	public void publishReply(long id, String tweetContent, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		params.put("in_reply_to_status_id", id);
+		client.post(apiUrl, params, "", handler);
+	}
+
 	public void updateRetweet(long id, JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/retweet/" + Long.toString(id) + ".json");
 		// Can specify query string params directly or through RequestParams.
@@ -92,6 +101,18 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("id", id);
 		client.post(apiUrl, params, "", handler);
+	}
+
+	public void getNextHomeTimeline(long start_id, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("since_id", 1);
+		params.put("max_id", start_id);
+		params.put("include_entities",true);
+		Log.d("TwitterClient", apiUrl);
+		client.get(apiUrl, params, handler);
 	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

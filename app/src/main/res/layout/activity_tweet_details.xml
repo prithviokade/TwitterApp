@@ -85,7 +85,7 @@
         android:text="TextView" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRetweets"
@@ -97,7 +97,7 @@
         app:srcCompat="@drawable/vector_compose_dm_fab" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/btnRetweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRetweets"
@@ -106,13 +106,13 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="212dp"
-        android:layout_toEndOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/btnReply"
         android:backgroundTint="@color/plain_white"
         android:tint="@color/medium_gray"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/btnFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRetweets"
@@ -120,7 +120,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="219dp"
-        android:layout_toEndOf="@+id/imageButton2"
+        android:layout_toEndOf="@+id/btnRetweet"
         android:background="@color/plain_white"
         android:tint="@color/medium_gray"
         app:srcCompat="@drawable/ic_vector_heart_stroke" />

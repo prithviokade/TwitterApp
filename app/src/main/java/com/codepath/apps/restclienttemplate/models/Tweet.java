@@ -98,6 +98,18 @@ public class Tweet {
         return tweets;
     }
 
+    public static Tweet findOldest(List<Tweet> tweetsFromNetwork) {
+        Tweet tweet = new Tweet();
+        for (int i = 0; i < tweetsFromNetwork.size(); i++) {
+            if (i == 0) {
+                tweet = tweetsFromNetwork.get(i);
+            } else if (tweetsFromNetwork.get(i).id < tweet.id) {
+                tweet = tweetsFromNetwork.get(i);
+            }
+        }
+        return tweet;
+    }
+
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
