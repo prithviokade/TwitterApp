@@ -51,7 +51,6 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
 		params.put("since_id", 1);
-		params.put("include_entities",true);
 		Log.d("TwitterClient", apiUrl);
 		client.get(apiUrl, params, handler);
 	}
@@ -109,7 +108,6 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
 		params.put("max_id", start_id);
-		params.put("include_entities",true);
 		Log.d("TwitterClient", apiUrl);
 		client.get(apiUrl, params, handler);
 	}

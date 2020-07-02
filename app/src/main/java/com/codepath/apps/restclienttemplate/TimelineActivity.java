@@ -83,7 +83,7 @@ public class TimelineActivity extends AppCompatActivity {
         adapter = new TweetsAdapter(this, tweets);
 
         // Set up layout manager and adapter of the recycler view
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(adapter);
         // Retain an instance so that you can call `resetState()` for fresh searches
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -177,9 +177,11 @@ public class TimelineActivity extends AppCompatActivity {
                 try {
                     final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
                     adapter.addAll(tweetsFromNetwork);
+                    adapter.notifyItemRangeInserted(tweets.size() - tweetsFromNetwork.size() - 1, 25);
                     Log.d(TAG, tweets.toString());
                     // Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
                     // start_id = oldest_tweet.id;
+                    // Log.d("start_id", Long.toString(start_id));
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
