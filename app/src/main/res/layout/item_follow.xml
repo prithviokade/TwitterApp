@@ -44,6 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:background="@color/twitter_blue"
-        android:text="Follow" />
+        android:background="@color/plain_white"
+        android:text="Follow"
+        android:textColor="@color/twitter_blue" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,19 +76,22 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
             tvName.setText(user.name);
             Glide.with(context).load(user.imageURL).transform(new CircleCrop()).into(ivProfile);
 
-            /*
+
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (follow.getText().toString() == "Follow") {
                         follow.setText("Following");
+                        follow.setBackgroundColor(Color.argb(255, 29, 161, 242));
+                        follow.setTextColor(Color.argb(255, 255, 255, 255));
                     } else {
                         follow.setText("Follow");
+                        follow.setBackgroundColor(Color.argb(255, 255, 255, 255));
+                        follow.setTextColor(Color.argb(255, 29, 161, 242));
                     }
                 }
             });
 
-             */
         }
     }
 
