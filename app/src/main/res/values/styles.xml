@@ -3,7 +3,7 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/twitter_blue</item>
         <item name="colorPrimaryDark">@color/twitter_blue</item>
-        <item name="colorAccent">@color/plain_white</item>
+        <item name="colorAccent">@color/medium_gray</item>
         <item name="android:statusBarColor">@color/twitter_blue</item>
         <!--
             Theme customizations available in newer API levels can go in

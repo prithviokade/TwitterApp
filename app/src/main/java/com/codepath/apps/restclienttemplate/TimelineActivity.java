@@ -176,20 +176,22 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
  */
 
     private void populateNextHomeTimeline() {
-        client.getNextHomeTimeline(tweets.get(tweets.size() - 1).id, new JsonHttpResponseHandler() {
+        Log.d("start_id", Long.toString(start_id));
+        client.getNextHomeTimeline(start_id, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.i(TAG, "onSuccessNext " + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 showProgressBar();
                 try {
-                    final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
-                    adapter.addAll(tweetsFromNetwork.subList(1, tweetsFromNetwork.size() - 1));
-                    adapter.notifyItemRangeInserted(tweets.size() - tweetsFromNetwork.size() - 1, 25);
+                    final List<Tweet> tweetsFromNetwork2 = Tweet.fromJsonArray(jsonArray);
+                    Log.d("whatttt", Integer.toString(tweetsFromNetwork2.subList(1, tweetsFromNetwork2.size() - 1).size()));
+                    adapter.addAll(tweetsFromNetwork2.subList(1, tweetsFromNetwork2.size() - 1));
+                    // adapter.notifyItemRangeInserted(tweets.size() - tweetsFromNetwornfnnjgturuuhtldfhfdliiihhjctkkink.size() - 1, 25);
                     Log.d(TAG, tweets.toString());
-                    // Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
-                    // start_id = oldest_tweet.id;
-                    // Log.d("start_id", Long.toString(start_id));
+                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork2);
+                    start_id = oldest_tweet.id;
+                    Log.d("start_id", Long.toString(start_id));
                 } catch (JSONException e) {
                     Log.e(TAG, "JSON exception", e);
                 }
@@ -217,8 +219,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
                     adapter.addAll(tweetsFromNetwork);
                     Log.d(TAG, tweets.toString());
                     swipeContainer.setRefreshing(false);
-                    //Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
-                    //start_id = oldest_tweet.id;
+                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
+                    start_id = oldest_tweet.id;
 
                     AsyncTask.execute(new Runnable() {
                         @Override
