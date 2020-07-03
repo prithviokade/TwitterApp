@@ -14,9 +14,9 @@
         android:label="Twitter"
         android:logo="@drawable/ic_launcher_twitter"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReplyActivity"></activity>
+        <activity android:name=".ComposeActivity"></activity>
+        <activity android:name=".ReplyActivity" />
         <activity android:name=".TweetDetailsActivity" />
-        <activity android:name=".ComposeActivity" />
         <activity android:name=".TimelineActivity" />
         <activity
             android:name=".LoginActivity"

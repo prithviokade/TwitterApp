@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -32,7 +33,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements ComposeFragment.ComposeFragmentListener {
 
     TwitterClient client;
     RecyclerView rvTweets;
@@ -65,8 +66,9 @@ public class TimelineActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.compose) {
                     // go to compose activity
-                    Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE);
+                    // Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                    // startActivityForResult(intent, REQUEST_CODE);
+                    showComposeDialog();
                     return true;
                 }
                 return false;
@@ -196,7 +198,20 @@ public class TimelineActivity extends AppCompatActivity {
 
 
  */
-    @Override
+
+    private void showComposeDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeFragment alertDialog = ComposeFragment.newInstance();
+        alertDialog.show(fm, "fragment_compose");
+    }
+
+    public void onActivityResult(Tweet tweet) {
+        tweets.add(0, tweet);
+        adapter.notifyItemInserted(0);
+        rvTweets.smoothScrollToPosition(0);
+    }
+
+/*
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // make sure requestCode is same as what we launched it with
         // make sure child activity (ComposeActivity) has finished successfully with resultCode
@@ -212,6 +227,8 @@ public class TimelineActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+ */
 
     private void populateNextHomeTimeline() {
         client.getNextHomeTimeline(tweets.get(tweets.size() - 1).id, new JsonHttpResponseHandler() {
