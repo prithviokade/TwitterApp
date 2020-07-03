@@ -68,18 +68,18 @@ public class TweetDetailsActivity extends AppCompatActivity {
 
         if (tweet.isRetweeted) {
             btnRetweet.setColorFilter(Color.argb(255, 0, 211, 30)); // Green Tint
-            tvRetweets.setTextColor(Color.argb(255, 0, 211, 30));
+            // tvRetweets.setTextColor(Color.argb(255, 0, 211, 30));
         } else {
             btnRetweet.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
-            tvRetweets.setTextColor(Color.argb(255, 170, 184, 194));
+            // tvRetweets.setTextColor(Color.argb(255, 170, 184, 194));
         }
 
         if (tweet.isFavorited) {
             btnFav.setColorFilter(Color.argb(255, 211, 0, 60)); // Red Tint
-            tvFavs.setTextColor(Color.argb(255, 211, 184, 194));
+            // tvFavs.setTextColor(Color.argb(255, 211, 184, 194));
         } else {
             btnFav.setColorFilter(Color.argb(255, 170, 184, 194)); // Grey Tint
-            tvFavs.setTextColor(Color.argb(255, 170, 184, 194));
+            // tvFavs.setTextColor(Color.argb(255, 170, 184, 194));
         }
 
         Glide.with(this).load(tweet.user.imageURL).transform(new CircleCrop()).into(ivProfile);
