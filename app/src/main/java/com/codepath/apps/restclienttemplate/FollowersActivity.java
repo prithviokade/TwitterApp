@@ -40,14 +40,13 @@ public class FollowersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_followers);
-        //ActivityFollowersBinding binding = ActivityFollowersBinding.inflate(getLayoutInflater());
-        //View view = binding.getRoot();
-        //setContentView(view);
+        ActivityFollowersBinding binding = ActivityFollowersBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         client = TwitterApplication.getRestClient(this);
 
-        rvFollowers = findViewById(R.id.rvFollowers);
+        rvFollowers = binding.rvFollowers;
         users = new ArrayList<>();
         adapter = new FollowAdapter(this, users);
 
@@ -58,8 +57,8 @@ public class FollowersActivity extends AppCompatActivity {
         rvFollowers.setAdapter(adapter);
         populateFollowers();
 
-        tvFollowers = findViewById(R.id.tvFollowers);
-        tvFollowing = findViewById(R.id.tvFollowing);
+        tvFollowers = binding.tvFollowers;
+        tvFollowing = binding.tvFollowing;
 
 
         tvFollowing.setOnClickListener(new View.OnClickListener() {

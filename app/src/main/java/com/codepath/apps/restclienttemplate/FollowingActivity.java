@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.databinding.ActivityFollowersBinding;
+import com.codepath.apps.restclienttemplate.databinding.ActivityFollowingBinding;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -39,11 +40,13 @@ public class FollowingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_following);
+        ActivityFollowingBinding binding = ActivityFollowingBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         client = TwitterApplication.getRestClient(this);
 
-        rvFollowing = findViewById(R.id.rvFollowing);
+        rvFollowing = binding.rvFollowing;
         users = new ArrayList<>();
         adapter = new FollowAdapter(this, users);
 
@@ -53,8 +56,8 @@ public class FollowingActivity extends AppCompatActivity {
         rvFollowing.setAdapter(adapter);
         populateFollowing();
 
-        tvFollowers = findViewById(R.id.tvFollowers);
-        tvFollowing = findViewById(R.id.tvFollowing);
+        tvFollowers = binding.tvFollowers;
+        tvFollowing = binding.tvFollowing;
 
         tvFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
