@@ -40,31 +40,38 @@ public class FollowersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityFollowersBinding binding = ActivityFollowersBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(R.layout.activity_followers);
+        //ActivityFollowersBinding binding = ActivityFollowersBinding.inflate(getLayoutInflater());
+        //View view = binding.getRoot();
+        //setContentView(view);
 
-        users = new ArrayList<>();
-        adapter = new FollowAdapter(this, users);
-        tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         client = TwitterApplication.getRestClient(this);
 
-        tvFollowers = binding.tvFollowers;
-        tvFollowing = binding.tvFollowing;
-        rvFollowers = binding.rvFollowers;
-
+        rvFollowers = findViewById(R.id.rvFollowers);
         users = new ArrayList<>();
+        adapter = new FollowAdapter(this, users);
+
+        tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
+
+
         rvFollowers.setLayoutManager(new LinearLayoutManager(this));
         rvFollowers.setAdapter(adapter);
-        // populateFollowers();
+        populateFollowers();
+
+        tvFollowers = findViewById(R.id.tvFollowers);
+        tvFollowing = findViewById(R.id.tvFollowing);
+
 
         tvFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(FollowersActivity.this, FollowingActivity.class);
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
                 startActivity(intent);
             }
         });
+
+
 
     }
 

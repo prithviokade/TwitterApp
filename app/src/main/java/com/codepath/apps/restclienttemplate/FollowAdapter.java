@@ -26,6 +26,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
     TwitterClient client;
 
     public FollowAdapter(Context context, List<User> users) {
+        Log.d("ysesh","idkkkkk");
         this.context = context;
         this.users = users;
     }
@@ -33,6 +34,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("Followadapter","uncreateviewholder");
         View view = LayoutInflater.from(context).inflate(R.layout.item_follow, parent, false);
         return new FollowAdapter.ViewHolder(view);
     }
@@ -73,6 +75,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
             tvName.setText(user.name);
             Glide.with(context).load(user.imageURL).transform(new CircleCrop()).into(ivProfile);
 
+            /*
             follow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -83,6 +86,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
                     }
                 }
             });
+
+             */
         }
     }
 
