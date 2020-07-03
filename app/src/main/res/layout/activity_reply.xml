@@ -7,26 +7,44 @@
     android:layout_margin="5dp"
     tools:context=".ReplyActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <!-- Toolbar is the actual app bar with text and the action items -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:title="Thread"
+            app:titleTextColor="@color/plain_white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ImageView
         android:id="@+id/ivProfPic"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_below="@+id/appBar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/appBar"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ivProfPic"
         android:backgroundTint="#FFFFFF"
-        android:layout_marginTop="5dp"
         android:textStyle="bold"
         tools:text="prithviro" />
 
@@ -47,10 +65,10 @@
         android:id="@+id/tvRelDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/appBar"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvScreenName"
+        android:layout_toEndOf="@+id/tvBody"
         android:backgroundTint="#FFFFFF"
         tools:text="3h" />
 
@@ -59,8 +77,10 @@
         android:layout_width="350dp"
         android:layout_height="219dp"
         android:layout_below="@+id/tvBody"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="0dp"
         android:layout_toEndOf="@+id/ivProfPic"
         android:backgroundTint="#FFFFFF"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -69,7 +89,7 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/appBar"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/tvName"

@@ -135,17 +135,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         populateHomeTimeline();
     }
 
-    /*
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // Store instance of the menu item containing progress
-
-        // Return to finish
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-
-     */
     public void showProgressBar() {
         // Show progress item
         miActionProgressItem.setVisible(true);
@@ -155,49 +144,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         // Hide progress item
         miActionProgressItem.setVisible(false);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; adds items to the action bar
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-        compose = menu.findItem(R.id.compose);
-        // actionProgress = menu.findItem(R.id.pbProgressAction);
-        compose.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Log.d("TimelineActivityCompose", "woot woot");
-                return true;
-            }
-        });
-
-        return true; // so menu is displayed
-    }
-
- */
-
-/*
-    public void composeItemClick() {
-        Log.d("TimelineActivityCompose", "woot woot");
-    }
-
- */
-
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // check if compose icon has been selected
-        if (item.getItemId() == R.id.compose) {
-            // go to compose activity
-            Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }
-        return true; // consume the tap of the menu item
-    }
-
-
- */
 
     private void showComposeDialog() {
         FragmentManager fm = getSupportFragmentManager();
@@ -227,7 +173,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
  */
 
     private void populateNextHomeTimeline() {
@@ -272,8 +217,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
                     adapter.addAll(tweetsFromNetwork);
                     Log.d(TAG, tweets.toString());
                     swipeContainer.setRefreshing(false);
-                    Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
-                    start_id = oldest_tweet.id;
+                    //Tweet oldest_tweet = Tweet.findOldest(tweetsFromNetwork);
+                    //start_id = oldest_tweet.id;
 
                     AsyncTask.execute(new Runnable() {
                         @Override

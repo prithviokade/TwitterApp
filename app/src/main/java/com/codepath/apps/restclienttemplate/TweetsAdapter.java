@@ -49,6 +49,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     // Bind values based on the position of the element
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("fmgpositionn", Integer.toString(position));
         // Get the data at position
         Tweet tweet = tweets.get(position);
         // Bind the tweet with the view holder
@@ -107,6 +108,16 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(final Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
+
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet)); // pass data
+                    context.startActivity(intent);
+                }
+            });
+
             tvName.setText(tweet.user.name);
             tvRelDate.setText("· " + tweet.getRelativeTimeAgo(tweet.createdAt));
             tvRetweets.setText(Long.toString(tweet.retweets));
